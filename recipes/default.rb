@@ -9,10 +9,11 @@
 
 include_recipe "apt"
 
-if node["mu"]["emacs_package"] do
-    package node["mu"]["emacs_package"] do
-      action :install
-    end
+case node["mu"]["emacs_package"]
+when false
+  package node["mu"]["emacs_package"] do
+    action :install
+  end
 end
 
 node["mu"]["packages"].each do |pkg|
