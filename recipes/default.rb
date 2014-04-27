@@ -9,9 +9,10 @@
 
 include_recipe "apt"
 
-#TODO: Create and use emacs24 cookbook
-package node["mu"]["emacs_package"] do
-  action :install
+if node["mu"]["emacs_package"] do
+    package node["mu"]["emacs_package"] do
+      action :install
+    end
 end
 
 node["mu"]["packages"].each do |pkg|

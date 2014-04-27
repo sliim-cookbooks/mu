@@ -11,7 +11,6 @@ Requirements
 #### Platforms:
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
 - Debian wheezy
-- Archlinux
 
 Attributes
 ----------
