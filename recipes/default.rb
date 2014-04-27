@@ -7,20 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#TODO: Run this only on debian and derived distro
-execute "Update APT" do
-  command "apt-get update"
-end
+include_recipe "apt"
 
 #TODO: Create and use emacs24 cookbook
-package "emacs23-nox" do
+package node["mu"]["emacs_package"] do
   action :install
 end
 
-#TODO: Package name are different between distro
-[ "libgmime-2.6-dev", "libxapian-dev", "guile-2.0-dev", "html2text", "xdg-utils", "guile-2.0-dev", "html2text", "xdg-utils", "g++", "libgtk2.0-dev" ].each do |pkg|
+node["mu"]["packages"].each do |pkg|
   package pkg do
-    action :install
+    action :upgrade
   end
 end
 
@@ -48,7 +44,7 @@ execute "configure and make" do
   command "./configure && make"
 end
 
-execute "install" do
+execute "Install mu" do
   cwd node["mu"]["build_dir"]
   command "sudo make install"
 end
