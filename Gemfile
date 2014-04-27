@@ -1,14 +1,13 @@
 source "https://rubygems.org"
 
-group :integration do
-  gem 'chef', '~> 0.10.8'
+gem 'chef', '~> 11.12.2'
+gem 'berkshelf'
 
-  gem 'test-kitchen', '~> 1.0.0.alpha'
+group :integration do
+  gem 'test-kitchen', '~> 1.2.1'
   gem 'kitchen-vagrant'
-  gem 'berkshelf'
   gem 'serverspec'
   gem 'rspec'
-
-  # gem 'strainer'
-  # gem 'foodcritic'
+  gem 'strainer'
+  gem 'foodcritic'
 end
