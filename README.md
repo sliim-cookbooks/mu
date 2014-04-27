@@ -4,7 +4,6 @@ Install and configures mu, a Maildir indexer
 
 Requirements
 ------------
-
 #### Cookbooks
 - `apt` - `http://community.opscode.com/cookbooks/apt`
 
@@ -35,8 +34,7 @@ Just include `mu` in your node's `run_list`:
 ```
 
 #### Tests
-
-This cookbook contains serverspec integration tests, foodcritic and knife tests.
+This cookbook contains serverspec for test-kitchen, foodcritic and knife tests.
 
 - First, install dependencies:  
 `bundle install`  
