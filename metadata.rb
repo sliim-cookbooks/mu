@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 name             'mu'
 maintainer       'Sliim'
 maintainer_email 'sliim@mailoo.org'
