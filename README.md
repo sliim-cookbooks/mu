@@ -1,6 +1,7 @@
 mu Cookbook
 ===========
-Install and configures mu, a Maildir indexer  
+Install and configures mu, a Maildir indexer.  
+[![Build Status](https://travis-ci.org/Sliim/mu-cookbook.svg?branch=master)](https://travis-ci.org/Sliim/mu-cookbook)
 
 Requirements
 ------------
