@@ -1,7 +1,7 @@
 mu Cookbook
 ===========
 Install and configures mu, a Maildir indexer.  
-[![Build Status](https://travis-ci.org/Sliim/mu-cookbook.svg?branch=master)](https://travis-ci.org/Sliim/mu-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/mu.svg)](https://community.opscode.com/cookbooks/mu) [![Build Status](https://travis-ci.org/Sliim/mu-cookbook.svg?branch=master)](https://travis-ci.org/Sliim/mu-cookbook)
 
 Requirements
 ------------
