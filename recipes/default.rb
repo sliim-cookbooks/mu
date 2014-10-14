@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: mu
 # Recipe:: default
@@ -18,12 +18,7 @@
 
 include_recipe 'apt'
 
-case node['mu']['emacs_package']
-when false
-  package node['mu']['emacs_package'] do
-    action :install
-  end
-end
+package node['mu']['emacs_package'] if node['mu']['emacs_package']
 
 node['mu']['packages'].each do |pkg|
   package pkg do
@@ -44,7 +39,6 @@ directory node['mu']['build_dir'] do
   owner 'root'
   group 'root'
   mode '0755'
-  action :create
   recursive true
 end
 

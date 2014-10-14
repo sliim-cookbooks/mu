@@ -19,7 +19,7 @@
 default['mu']['build_dir'] = '/opt/mu'
 default['mu']['version'] = '0.9.8.5'
 default['mu']['emacs_package'] = 'emacs23-nox'
-default['mu']['packages'] = Array.new
+default['mu']['packages'] = []
 
 case node['platform']
 when 'debian'

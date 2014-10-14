@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: mu
 # Recipe:: default
@@ -16,10 +16,9 @@
 # limitations under the License.
 #
 
-require 'spec_helper'
-
 describe file('/opt/mu') do
   it { should be_directory }
+  it { should be_mode 755 }
 end
 
 describe file('/opt/mu/README') do
@@ -28,4 +27,5 @@ end
 
 describe file('/usr/local/bin/mu') do
   it { should be_file }
+  it { should be_executable }
 end

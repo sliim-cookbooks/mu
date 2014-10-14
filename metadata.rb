@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 
 name             'mu'
 maintainer       'Sliim'
@@ -8,4 +8,7 @@ description      'Installs/Configures mu'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.1'
 
+recipe 'default', 'Build and install mu from source'
+
 depends 'apt'
+supports 'debian'
