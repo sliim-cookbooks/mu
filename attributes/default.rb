@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Cookbook Name:: mu
 # Attributes:: default
@@ -18,10 +18,11 @@
 
 default['mu']['build_dir'] = '/opt/mu'
 default['mu']['version'] = '0.9.8.5'
+default['mu']['emacs_package'] = 'emacs23-nox'
+default['mu']['packages'] = Array.new
 
 case node['platform']
 when 'debian'
-  default['mu']['emacs_package'] = 'emacs23-nox'
   default['mu']['packages'] = ['libgmime-2.6-dev', 'libxapian-dev',
                                'guile-2.0-dev', 'html2text', 'xdg-utils',
                                'guile-2.0-dev', 'html2text', 'xdg-utils',
