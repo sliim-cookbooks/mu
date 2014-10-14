@@ -52,7 +52,7 @@ execute 'configure and make' do
   command './configure && make'
 end
 
-execute 'Install mu' do
+execute 'install mu' do
   cwd node['mu']['build_dir']
-  command 'sudo make install'
+  command 'make install'
 end
