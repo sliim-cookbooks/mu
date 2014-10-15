@@ -3,10 +3,16 @@ mu CHANGELOG
 
 This file is used to list changes made in each version of the mu cookbook.
 
-0.1.0
+O.1.2
 -----
-- [Sliim] - Initial release of mu
+- Fixed compilation error
+- Added Chefspec
+- Code improvements
 
 0.1.1
 -----
-- [Sliim] - Use official opscode box for test-kitchen
+- Use official opscode box for test-kitchen
+
+0.1.0
+-----
+- Initial release of mu
