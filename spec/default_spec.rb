@@ -48,7 +48,10 @@ describe 'mu::default' do
     it 'does untar mu package' do
       expect(subject).to run_execute('untar')
         .with(cwd: '/opt/mu',
-              command: 'tar --strip-components 1 -xzf /var/chef/cache/mu.tar.gz')
+              command: format('%s %s %s',
+                              'tar',
+                              '--strip-components 1 -xzf',
+                              '/var/chef/cache/mu.tar.gz'))
     end
 
     it 'does build mu' do
@@ -103,7 +106,10 @@ describe 'mu::default' do
     it 'does untar mu package' do
       expect(subject).to run_execute('untar')
         .with(cwd: '/opt/mu-build',
-              command: 'tar --strip-components 1 -xzf /var/chef/cache/mu.tar.gz')
+              command: format('%s %s %s',
+                              'tar',
+                              '--strip-components 1 -xzf',
+                              '/var/chef/cache/mu.tar.gz'))
     end
 
     it 'does build mu' do
