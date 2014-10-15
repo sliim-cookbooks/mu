@@ -16,6 +16,9 @@
 # limitations under the License.
 #
 
+require 'serverspec'
+set :backend, :exec
+
 describe file('/opt/mu') do
   it { should be_directory }
   it { should be_mode 755 }
