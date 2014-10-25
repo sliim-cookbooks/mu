@@ -69,6 +69,7 @@ describe 'mu::compile' do
         node.set['mu']['compile']['build_dir'] = '/opt/mu-build'
         node.set['mu']['compile']['version'] = '1.3.3.7'
         node.set['mu']['compile']['packages'] = ['libxapian-dev']
+        node.set['mu']['compile']['flags'] = ['--with-guile-support=no']
       end.converge described_recipe
     end
 
@@ -106,7 +107,7 @@ describe 'mu::compile' do
     it 'does build mu' do
       expect(subject).to run_execute('configure and make')
         .with(cwd: '/opt/mu-build',
-              command: './configure && make')
+              command: './configure --with-guile-support=no&& make')
     end
 
     it 'does install mu' do

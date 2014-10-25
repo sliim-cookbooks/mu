@@ -45,7 +45,7 @@ end
 
 execute 'configure and make' do
   cwd node['mu']['compile']['build_dir']
-  command './configure && make'
+  command "./configure #{node['mu']['compile']['flags'].join(' ')}&& make"
 end
 
 execute 'install mu' do

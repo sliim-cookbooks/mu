@@ -19,6 +19,7 @@
 default['mu']['compile']['build_dir'] = '/opt/mu'
 default['mu']['compile']['version'] = '0.9.8.5'
 default['mu']['compile']['packages'] = []
+default['mu']['compile']['flags'] = []
 
 case node['platform']
 when 'debian'
