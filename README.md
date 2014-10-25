@@ -15,22 +15,54 @@ The following platforms and versions are tested and supported using Opscode's te
 Attributes
 ----------
 #### mu::default
-* `default["mu"]["build_dir"]` - Where mu archive will be extracted and builded
-* `default["mu"]["version"]` - mu version to install
 * `default["mu"]["emacs_package"]` = emascs package to install. If null, mu recipe will include emacs24 cookbook
 * `default["mu"]["packages"]` - package dependencies, depending of the platform.
+
+#### mu::compile
+* `default["mu"]["compile"]["build_dir"]` - Where mu archive will be extracted and builded
+* `default["mu"]["compile"]["version"]` - mu version to install
+* `default["mu"]["compile"]["packages"]` - Required packages for compilation
+* `default["mu"]["compile"]["flags"]` - Flags to pass to configure script
 
 Usage
 -----
 #### mu::default
-Just include `mu` in your node's `run_list`:
+Just include `mu` in your node's `run_list` to install from packages:
 
 ```json
 {
   "name":"my_node",
   "run_list": [
     "recipe[mu]"
-  ]
+  ],
+  "attributes": {
+    "mu": {
+      "emacs_package": "emacs23-nox",
+      "packages": ["maildir-utils", "mu4e"]
+    }
+  }
+}
+```
+
+#### mu::compile
+Just include `mu::compile` in your node's `run_list` to install from sources:
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[mu:compile]"
+  ],
+  "attributes": {
+    "mu": {
+      "compile": {
+        "build_dir": "/tmp/mu",
+        "version": "0.9.8.5",
+        "packages": ["libxapian-dev"],
+        "flags": ["--with-guile-support=no"]
+      }
+    }
+  }
 }
 ```
 
