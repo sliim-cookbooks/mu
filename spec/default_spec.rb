@@ -52,4 +52,17 @@ describe 'mu::default' do
       expect(subject).to install_package('build-essential')
     end
   end
+
+  context 'without packages' do
+    let(:subject) do
+      ChefSpec::Runner.new do |node|
+        node.set['mu']['emacs_package'] = nil
+        node.set['mu']['packages'] = nil
+      end.converge described_recipe
+    end
+
+    it 'does include mu::compile recipe' do
+      expect(subject).to include_recipe('mu::compile')
+    end
+  end
 end
