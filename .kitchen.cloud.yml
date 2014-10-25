@@ -19,11 +19,14 @@ platforms:
       image_ref: <%= ENV['KITCHEN_OS_IMG_DEBIAN7'] %>
 
 suites:
-- name: mu
+- name: default
   run_list:
   - recipe[mu]
+- name: compile
+  run_list:
+  - recipe[mu::compile]
   attributes: {
     mu: {
-      build_dir: "/opt/mu"
-    }
+      build_dir: '/opt/mu'
+      }
   }

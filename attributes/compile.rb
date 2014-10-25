@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: mu
+# Attributes:: compile
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +16,15 @@
 # limitations under the License.
 #
 
-require 'chefspec'
-require 'chefspec/berkshelf'
+default['mu']['compile']['build_dir'] = '/opt/mu'
+default['mu']['compile']['version'] = '0.9.8.5'
+default['mu']['compile']['packages'] = []
 
-RSpec.configure do |config|
-  config.log_level = :error
+case node['platform']
+when 'debian'
+  default['mu']['compile']['packages'] = ['libgmime-2.6-dev', 'libxapian-dev',
+                                          'guile-2.0-dev', 'html2text',
+                                          'xdg-utils', 'guile-2.0-dev',
+                                          'html2text', 'xdg-utils',
+                                          'g++', 'libgtk2.0-dev']
 end
-
-ChefSpec::Coverage.start! { add_filter 'mu' }
-
-require 'chef/application'

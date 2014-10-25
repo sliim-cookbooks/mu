@@ -10,11 +10,16 @@ platforms:
       box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
 
 suites:
-- name: mu
+- name: default
   run_list:
   - recipe[mu]
+- name: compile
+  run_list:
+  - recipe[mu::compile]
   attributes: {
     mu: {
-      build_dir: "/opt/mu"
+      compile: {
+        build_dir: '/opt/mu'
+      }
     }
   }

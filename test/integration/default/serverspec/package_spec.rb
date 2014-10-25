@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: mu
+# Recipe:: default
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +16,17 @@
 # limitations under the License.
 #
 
-require 'chefspec'
-require 'chefspec/berkshelf'
+require 'serverspec'
+set :backend, :exec
 
-RSpec.configure do |config|
-  config.log_level = :error
+describe package('emacs23-nox') do
+  it { should be_installed }
 end
 
-ChefSpec::Coverage.start! { add_filter 'mu' }
+describe package('maildir-utils') do
+  it { should be_installed }
+end
 
-require 'chef/application'
+describe package('mu4e') do
+  it { should be_installed }
+end

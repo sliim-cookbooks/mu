@@ -21,38 +21,5 @@ include_recipe 'apt'
 package node['mu']['emacs_package'] if node['mu']['emacs_package']
 
 node['mu']['packages'].each do |pkg|
-  package pkg do
-    action :upgrade
-  end
-end
-
-remotefile = 'http://mu0.googlecode.com/files/mu-'
-remotefile << node['mu']['version'] << '.tar.gz'
-localfile = Chef::Config[:file_cache_path] + '/mu.tar.gz'
-
-remote_file localfile do
-  source remotefile
-  mode '0644'
-end
-
-directory node['mu']['build_dir'] do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  recursive true
-end
-
-execute 'untar' do
-  cwd node['mu']['build_dir']
-  command 'tar --strip-components 1 -xzf ' + localfile
-end
-
-execute 'configure and make' do
-  cwd node['mu']['build_dir']
-  command './configure && make'
-end
-
-execute 'install mu' do
-  cwd node['mu']['build_dir']
-  command 'make install'
+  package pkg
 end

@@ -30,48 +30,11 @@ describe 'mu::default' do
     it 'does install emacs package' do
       expect(subject).to install_package('emacs23-nox')
     end
-
-    it 'does download mu package' do
-      expect(subject).to create_remote_file('/var/chef/cache/mu.tar.gz')
-        .with(source: 'http://mu0.googlecode.com/files/mu-0.9.8.5.tar.gz',
-              mode: '0644')
-    end
-
-    it 'does create build directory' do
-      expect(subject).to create_directory('/opt/mu')
-        .with(owner: 'root',
-              group: 'root',
-              mode: '0755',
-              recursive: true)
-    end
-
-    it 'does untar mu package' do
-      expect(subject).to run_execute('untar')
-        .with(cwd: '/opt/mu',
-              command: format('%s %s %s',
-                              'tar',
-                              '--strip-components 1 -xzf',
-                              '/var/chef/cache/mu.tar.gz'))
-    end
-
-    it 'does build mu' do
-      expect(subject).to run_execute('configure and make')
-        .with(cwd: '/opt/mu',
-              command: './configure && make')
-    end
-
-    it 'does install mu' do
-      expect(subject).to run_execute('install mu')
-        .with(cwd: '/opt/mu',
-              command: 'make install')
-    end
   end
 
   context 'with overriden attributes' do
     let(:subject) do
       ChefSpec::Runner.new do |node|
-        node.set['mu']['build_dir'] = '/opt/mu-build'
-        node.set['mu']['version'] = '1.3.3.7'
         node.set['mu']['emacs_package'] = 'emacs'
         node.set['mu']['packages'] = ['build-essential']
       end.converge described_recipe
@@ -86,42 +49,7 @@ describe 'mu::default' do
     end
 
     it 'does install build-essential package' do
-      expect(subject).to upgrade_package('build-essential')
-    end
-
-    it 'does download mu package' do
-      expect(subject).to create_remote_file('/var/chef/cache/mu.tar.gz')
-        .with(source: 'http://mu0.googlecode.com/files/mu-1.3.3.7.tar.gz',
-              mode: '0644')
-    end
-
-    it 'does create build directory' do
-      expect(subject).to create_directory('/opt/mu-build')
-        .with(owner: 'root',
-              group: 'root',
-              mode: '0755',
-              recursive: true)
-    end
-
-    it 'does untar mu package' do
-      expect(subject).to run_execute('untar')
-        .with(cwd: '/opt/mu-build',
-              command: format('%s %s %s',
-                              'tar',
-                              '--strip-components 1 -xzf',
-                              '/var/chef/cache/mu.tar.gz'))
-    end
-
-    it 'does build mu' do
-      expect(subject).to run_execute('configure and make')
-        .with(cwd: '/opt/mu-build',
-              command: './configure && make')
-    end
-
-    it 'does install mu' do
-      expect(subject).to run_execute('install mu')
-        .with(cwd: '/opt/mu-build',
-              command: 'make install')
+      expect(subject).to install_package('build-essential')
     end
   end
 end
