@@ -22,11 +22,18 @@ suites:
 - name: default
   run_list:
   - recipe[mu]
+  attributes: {
+    mu: {
+      emacs_package: 'emacs23-nox'
+    }
+  }
 - name: compile
   run_list:
   - recipe[mu::compile]
   attributes: {
     mu: {
-      build_dir: '/opt/mu'
+      compile: {
+        build_dir: '/tmp/mu'
       }
+    }
   }

@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-default['mu']['emacs_package'] = 'emacs23-nox'
+default['mu']['emacs_package'] = nil
 default['mu']['packages'] = []
 
 case node['platform']

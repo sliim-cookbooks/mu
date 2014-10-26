@@ -26,17 +26,13 @@ describe 'mu::default' do
     it 'does include apt recipe' do
       expect(subject).to include_recipe('apt')
     end
-
-    it 'does install emacs package' do
-      expect(subject).to install_package('emacs23-nox')
-    end
   end
 
   context 'with overriden attributes' do
     let(:subject) do
       ChefSpec::Runner.new do |node|
         node.set['mu']['emacs_package'] = 'emacs'
-        node.set['mu']['packages'] = ['build-essential']
+        node.set['mu']['packages'] = ['maildir-utils']
       end.converge described_recipe
     end
 
@@ -48,8 +44,8 @@ describe 'mu::default' do
       expect(subject).to install_package('emacs')
     end
 
-    it 'does install build-essential package' do
-      expect(subject).to install_package('build-essential')
+    it 'does install maildir-utils package' do
+      expect(subject).to install_package('maildir-utils')
     end
   end
 
@@ -63,6 +59,18 @@ describe 'mu::default' do
 
     it 'does include mu::compile recipe' do
       expect(subject).to include_recipe('mu::compile')
+    end
+  end
+
+  context 'on debian platform' do
+    let(:subject) do
+      ChefSpec::Runner.new(platform: 'debian', version: '7.5')
+        .converge described_recipe
+    end
+
+    it 'does install default package' do
+      expect(subject).to install_package('maildir-utils')
+      expect(subject).to install_package('mu4e')
     end
   end
 end

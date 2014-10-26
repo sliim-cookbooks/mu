@@ -19,12 +19,12 @@
 require 'serverspec'
 set :backend, :exec
 
-describe file('/opt/mu') do
+describe file('/tmp/mu') do
   it { should be_directory }
   it { should be_mode 755 }
 end
 
-describe file('/opt/mu/README') do
+describe file('/tmp/mu/README') do
   it { should be_file }
 end
 
