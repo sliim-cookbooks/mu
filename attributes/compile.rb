@@ -17,7 +17,8 @@
 #
 
 default['mu']['compile']['build_dir'] = '/opt/mu'
-default['mu']['compile']['version'] = '0.9.8.5'
+default['mu']['compile']['git-repository'] = 'https://github.com/djcb/mu.git'
+default['mu']['compile']['git-reference'] = 'v0.9.13'
 default['mu']['compile']['packages'] = []
 default['mu']['compile']['flags'] = []
 
@@ -26,6 +27,7 @@ when 'debian'
   default['mu']['compile']['packages'] = ['libgmime-2.6-dev', 'libxapian-dev',
                                           'guile-2.0-dev', 'html2text',
                                           'xdg-utils', 'guile-2.0-dev',
-                                          'html2text', 'xdg-utils',
-                                          'g++', 'libgtk2.0-dev']
+                                          'html2text', 'xdg-utils', 'g++',
+                                          'libgtk2.0-dev', 'autoconf',
+                                          'texinfo', 'git-core']
 end

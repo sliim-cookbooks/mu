@@ -5,22 +5,22 @@ Install and configures mu, a Maildir indexer.
 
 Requirements
 ------------
-#### Cookbooks
-- `apt` - `http://community.opscode.com/cookbooks/apt`
 
 #### Platforms:
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
-- Debian wheezy
+- Debian 7
+- Debian 8
 
 Attributes
 ----------
 #### mu::default
-* `default["mu"]["emacs_package"]` = emascs package to install. If null, mu recipe will include emacs24 cookbook
+* `default["mu"]["emacs_package"]` = emascs package to install.
 * `default["mu"]["packages"]` - package dependencies, depending of the platform.
 
 #### mu::compile
 * `default["mu"]["compile"]["build_dir"]` - Where mu archive will be extracted and builded
-* `default["mu"]["compile"]["version"]` - mu version to install
+* `default["mu"]["compile"]["git-repository"]` - Git repository
+* `default["mu"]["compile"]["git-reference"]` - Git reference
 * `default["mu"]["compile"]["packages"]` - Required packages for compilation
 * `default["mu"]["compile"]["flags"]` - Flags to pass to configure script
 
@@ -57,7 +57,7 @@ Just include `mu::compile` in your node's `run_list` to install from sources:
     "mu": {
       "compile": {
         "build_dir": "/tmp/mu",
-        "version": "0.9.8.5",
+        "git-reference": "v0.9.11",
         "packages": ["libxapian-dev"],
         "flags": ["--with-guile-support=no"]
       }

@@ -1,16 +1,18 @@
 ---
 driver:
-  name: vagrant
+  name: docker
+  binary: docker
+  use_sudo: false
 
 provisioner:
   name: chef_zero
 
 platforms:
-  - name: debian-7.6
+  - name: debian-7
     attributes:
       mu:
         emacs_package: emacs23-nox
-  - name: debian-8.1
+  - name: debian-8
     attributes:
       mu:
         emacs_package: emacs24-nox

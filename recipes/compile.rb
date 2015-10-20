@@ -16,39 +16,24 @@
 # limitations under the License.
 #
 
-include_recipe 'apt'
-
 node['mu']['compile']['packages'].each do |pkg|
   package pkg
 end
 
-remotefile = 'http://mu0.googlecode.com/files/mu-'
-remotefile << node['mu']['compile']['version'] << '.tar.gz'
-localfile = Chef::Config[:file_cache_path] + '/mu.tar.gz'
-
-remote_file localfile do
-  source remotefile
-  mode '0644'
+git node['mu']['compile']['build_dir'] do
+  repository node['mu']['compile']['git-repository']
+  reference node['mu']['compile']['git-reference']
 end
 
-directory node['mu']['compile']['build_dir'] do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  recursive true
-end
-
-execute 'untar' do
+execute 'autoreconf -i' do
   cwd node['mu']['compile']['build_dir']
-  command 'tar --strip-components 1 -xzf ' + localfile
 end
 
-execute 'configure and make' do
+execute 'build-mu' do
   cwd node['mu']['compile']['build_dir']
   command "./configure #{node['mu']['compile']['flags'].join(' ')}&& make"
 end
 
-execute 'install mu' do
+execute 'make install' do
   cwd node['mu']['compile']['build_dir']
-  command 'make install'
 end

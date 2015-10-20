@@ -1,119 +1,58 @@
 # -*- coding: utf-8 -*-
-#
-# Cookbook Name:: mu
-# Spec:: compile
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 
 require_relative 'spec_helper'
 
 describe 'mu::compile' do
-  context 'with default attributes' do
-
-    let(:subject) { ChefSpec::Runner.new.converge described_recipe }
-
-    it 'does include apt recipe' do
-      expect(subject).to include_recipe('apt')
+  context 'on debian platform' do
+    let(:subject) do
+      ChefSpec::Runner.new(
+        platform: 'debian',
+        version: '8.0').converge(described_recipe)
     end
 
-    it 'does download mu package' do
-      expect(subject).to create_remote_file('/var/chef/cache/mu.tar.gz')
-        .with(source: 'http://mu0.googlecode.com/files/mu-0.9.8.5.tar.gz',
-              mode: '0644')
-    end
-
-    it 'does create build directory' do
-      expect(subject).to create_directory('/opt/mu')
-        .with(owner: 'root',
-              group: 'root',
-              mode: '0755',
-              recursive: true)
-    end
-
-    it 'does untar mu package' do
-      expect(subject).to run_execute('untar')
-        .with(cwd: '/opt/mu',
-              command: format('%s %s %s',
-                              'tar',
-                              '--strip-components 1 -xzf',
-                              '/var/chef/cache/mu.tar.gz'))
-    end
-
-    it 'does build mu' do
-      expect(subject).to run_execute('configure and make')
-        .with(cwd: '/opt/mu',
-              command: './configure && make')
-    end
-
-    it 'does install mu' do
-      expect(subject).to run_execute('install mu')
-        .with(cwd: '/opt/mu',
-              command: 'make install')
+    ['libgmime-2.6-dev', 'libxapian-dev', 'guile-2.0-dev', 'html2text',
+     'xdg-utils', 'guile-2.0-dev', 'html2text', 'xdg-utils', 'g++',
+     'libgtk2.0-dev', 'autoconf', 'texinfo', 'git-core'].each do |pkg|
+      it "installs package[#{pkg}]" do
+        expect(subject).to install_package(pkg)
+      end
     end
   end
 
-  context 'with overriden attributes' do
+  subject { ChefSpec::SoloRunner.new.converge(described_recipe) }
+
+  it 'syncs git[/opt/mu]' do
+    expect(subject).to sync_git('/opt/mu')
+      .with(repository: 'https://github.com/djcb/mu.git',
+            reference: 'v0.9.13')
+  end
+
+  it 'runs execute[autoreconf -i]' do
+    expect(subject).to run_execute('autoreconf -i')
+      .with(cwd: '/opt/mu')
+  end
+
+  it 'runs execute[build-mu]' do
+    expect(subject).to run_execute('build-mu')
+      .with(cwd: '/opt/mu',
+            command: './configure && make')
+  end
+
+  it 'runs execute[make install]' do
+    expect(subject).to run_execute('make install').with(cwd: '/opt/mu')
+  end
+
+  context 'with flags' do
     let(:subject) do
       ChefSpec::Runner.new do |node|
-        node.set['mu']['compile']['build_dir'] = '/opt/mu-build'
-        node.set['mu']['compile']['version'] = '1.3.3.7'
-        node.set['mu']['compile']['packages'] = ['libxapian-dev']
         node.set['mu']['compile']['flags'] = ['--with-guile-support=no']
       end.converge described_recipe
     end
 
-    it 'does include apt recipe' do
-      expect(subject).to include_recipe('apt')
-    end
-
-    it 'does install package required to build mu' do
-      expect(subject).to install_package('libxapian-dev')
-    end
-
-    it 'does download mu package' do
-      expect(subject).to create_remote_file('/var/chef/cache/mu.tar.gz')
-        .with(source: 'http://mu0.googlecode.com/files/mu-1.3.3.7.tar.gz',
-              mode: '0644')
-    end
-
-    it 'does create build directory' do
-      expect(subject).to create_directory('/opt/mu-build')
-        .with(owner: 'root',
-              group: 'root',
-              mode: '0755',
-              recursive: true)
-    end
-
-    it 'does untar mu package' do
-      expect(subject).to run_execute('untar')
-        .with(cwd: '/opt/mu-build',
-              command: format('%s %s %s',
-                              'tar',
-                              '--strip-components 1 -xzf',
-                              '/var/chef/cache/mu.tar.gz'))
-    end
-
-    it 'does build mu' do
-      expect(subject).to run_execute('configure and make')
-        .with(cwd: '/opt/mu-build',
+    it 'runs execute[build-mu]' do
+      expect(subject).to run_execute('build-mu')
+        .with(cwd: '/opt/mu',
               command: './configure --with-guile-support=no&& make')
-    end
-
-    it 'does install mu' do
-      expect(subject).to run_execute('install mu')
-        .with(cwd: '/opt/mu-build',
-              command: 'make install')
     end
   end
 end

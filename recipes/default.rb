@@ -16,8 +16,6 @@
 # limitations under the License.
 #
 
-include_recipe 'apt'
-
 package node['mu']['emacs_package'] if node['mu']['emacs_package']
 
 if node['mu']['packages'].empty? || node['mu']['packages'].nil?
