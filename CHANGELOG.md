@@ -3,6 +3,11 @@ mu CHANGELOG
 
 This file is used to list changes made in each version of the mu cookbook.
 
+0.3.0
+-----
+Now use git repository to build from source.
+Breaking changes: Attribute `[mu][compile][version]` is no longer available! Use `[mu][compile][git-reference]` instead.
+
 0.2.0
 -----
 - Added `compile` recipe for installation from source
