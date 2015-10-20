@@ -3,6 +3,10 @@ mu CHANGELOG
 
 This file is used to list changes made in each version of the mu cookbook.
 
+0.3.1
+-----
+`S70wN::compile` now install mu4e.
+
 0.3.0
 -----
 Now use git repository to build from source.
