@@ -76,7 +76,7 @@ This cookbook contains serverspec for test-kitchen, foodcritic and knife tests.
 `berks install`
 
 - To run all tests:  
-`bundle exec strainer test`
+`bundle exec rake`
 
 - To run integration tests:
 `bundle exec kitchen test`
