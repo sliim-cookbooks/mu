@@ -42,6 +42,12 @@ describe 'mu::compile' do
     expect(subject).to run_execute('make install').with(cwd: '/opt/mu')
   end
 
+  it 'runs execute[make-install-mu4e]' do
+    expect(subject).to run_execute('make-install-mu4e')
+      .with(cwd: '/opt/mu/mu4e',
+            command: 'make install')
+  end
+
   context 'with flags' do
     let(:subject) do
       ChefSpec::Runner.new do |node|

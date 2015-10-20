@@ -37,3 +37,8 @@ end
 execute 'make install' do
   cwd node['mu']['compile']['build_dir']
 end
+
+execute 'make-install-mu4e' do
+  cwd "#{node['mu']['compile']['build_dir']}/mu4e"
+  command 'make install'
+end
